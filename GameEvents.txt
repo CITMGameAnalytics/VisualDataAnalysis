@@ -1,0 +1,18 @@
+PLAYER
+WalkingPositionEvent (Recurrent, 2D Surface, when player on ground)
+KeyPositionEvent (Recurrent, 3D, when player carrying key)
+AirbornePositionEvent (Recurrent, 3D, when player on air after jump or fall)
+
+PLAYER
+JumpEvent (Trigger)
+AttackEvent (Trigger)
+DamageEvent (Trigger)
+DeathEvent (Trigger)
+SpawnEvent (Trigger)
+InvulnerabilityStartEvent (Trigger)
+InvulnerabilityEndEvent (Trigger)
+
+ENEMY
+PositionEvent (Recurrent)
+AttackEvent (Trigger)
+DeathEvent (Trigger)
