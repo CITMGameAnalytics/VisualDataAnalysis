@@ -15,7 +15,8 @@ public class HM_Manager : MonoBehaviour
     public int map_start_X = -35;
     public int map_start_y = -45;
 
-    private uint[,] grid;
+    private uint[,] grid;   //This grid will control where each position fits.
+    private uint highest_density = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,9 @@ public class HM_Manager : MonoBehaviour
         positions.Add(new Vector3(2.3f, 0.0f, 0.0f));
         positions.Add(new Vector3(2.0f, 0.0f, 0.0f));
         positions.Add(new Vector3(2.4f, 0.0f, 0.0f));
+        positions.Add(new Vector3(2.4f, 0.0f, 1.0f));
+        positions.Add(new Vector3(2.4f, 0.0f, 2.0f));
+        positions.Add(new Vector3(2.4f, 0.0f, 3.0f));
 
         grid = new uint[width,height];
 
@@ -53,6 +57,16 @@ public class HM_Manager : MonoBehaviour
         foreach (Vector3 vec in positions)
         {
             grid[(int)vec.x - map_start_X, (int)vec.z - map_start_y]++;
+        }
+
+        //Now let's check the highest density value!
+        for (int i = 0; i < width; ++i)
+        {
+            for (int j = 0; j < height; ++j)
+            {
+                if (grid[i, j] > highest_density)
+                    highest_density = grid[i, j];
+            } 
         }
     }
 
