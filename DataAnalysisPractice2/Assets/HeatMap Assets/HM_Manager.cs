@@ -33,7 +33,7 @@ public class HM_Manager : MonoBehaviour
 
         grid = new uint[width,height];
 
-
+        populateGrid();
 
         //Print the HeatMap
         displayMap();
@@ -46,18 +46,13 @@ public class HM_Manager : MonoBehaviour
     }
 
     //This function sorts the list and eliminates duplicate cubes (only 1 cube per "grid" position)
-    private void sortAvoidDuplication()
+    private void populateGrid()
     {
-        positions.Sort();
+        //positions.Sort();
 
-        Vector3 vec_threshold = new Vector3(0.0f,0.0f,0.0f);
         foreach (Vector3 vec in positions)
         {
-            if(vec.x >= vec_threshold.x + 0.5f)
-            {
-
-                vec_threshold.x = vec.x;
-            }
+            grid[(int)vec.x - map_start_X, (int)vec.z - map_start_y]++;
         }
     }
 
@@ -73,7 +68,10 @@ public class HM_Manager : MonoBehaviour
         {
             for(int j = 0; j < height; ++j)
             {
-                Instantiate(cube_prefab, new Vector3(i + map_start_X,10.0f,j + map_start_y), Quaternion.identity);
+                if (grid[i, j] > 0)
+                {
+                    Instantiate(cube_prefab, new Vector3(i + map_start_X, 0.0f, j + map_start_y), Quaternion.identity);
+                }
             }
         }
     }
