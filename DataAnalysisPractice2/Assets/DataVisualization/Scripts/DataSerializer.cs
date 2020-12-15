@@ -18,11 +18,18 @@ namespace DataVisualizer
                 Destroy(gameObject);
 
             //dataSerializer._Print("test", "test.csv");
+            //string t = "";
+            //dataSerializer._Read(ref t, "test.csv");
         }
 
         public static void Print(string s, string filename)
         {
             dataSerializer._Print(s, filename);
+        }
+
+        public static void Read(ref string s, string filename)
+        {
+            dataSerializer._Read(ref s, filename);
         }
 
         public void _Print(string s, string filename)
@@ -38,6 +45,26 @@ namespace DataVisualizer
 
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(file, s);
+
+            file.Close();
+        }
+
+        public void _Read(ref string s, string filename)
+        {
+            // write csv
+            string destination = Application.dataPath + "/" + filename;
+            FileStream file;
+
+            if (File.Exists(destination))
+                file = File.OpenRead(destination);
+            else
+            {
+                Debug.LogError("File not found");
+                return;
+            }
+
+            BinaryFormatter bf = new BinaryFormatter();
+            s = bf.Deserialize(file).ToString();
 
             file.Close();
         }
