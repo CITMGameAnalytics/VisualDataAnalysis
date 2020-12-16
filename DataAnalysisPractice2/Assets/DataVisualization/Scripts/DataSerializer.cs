@@ -17,9 +17,9 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            string t = "HEY";
+            //string t = "HEY";
             //t = JsonUtility.ToJson(t);
-            dataSerializer._Print(ref t, "test.csv");
+            //dataSerializer._Print(ref t, "test.csv");
             
             //dataSerializer._Read(ref t, "test.csv");
         }
@@ -36,21 +36,8 @@ namespace DataVisualizer
 
         public void _Print(ref string s, string filename)
         {
-            // write csv
             string destination = Application.dataPath + filename;
-            //FileStream file;
 
-            //if (File.Exists(destination))
-            //    file = File.Open(destination, FileMode.Open);
-            //else
-            //    file = File.Create(destination);
-
-            //System.IO.StringWriter stringWriter;
-
-            //BinaryFormatter bf = new BinaryFormatter();
-            //bf.Serialize(file, s);
-
-            //file.Write(s.t, (int)file.Length, s.Length);
             if (File.Exists(destination))
                 System.IO.File.AppendAllText(destination, s);
             else
@@ -58,28 +45,14 @@ namespace DataVisualizer
                 File.Create(destination);
                 System.IO.File.WriteAllText(destination, s);
             }
-
-            //file.Close();
         }
 
         public void _Read(ref string s, string filename)
         {
-            // write csv
             string destination = Application.dataPath + "/" + filename;
-            //FileStream file;
-
-            //if (File.Exists(destination))
-            //    file = File.OpenRead(destination);
-            //else
-            //{
-            //    Debug.LogError("File not found");
-            //    return;
-            //}
 
             if (File.Exists(destination))
                 s = System.IO.File.ReadAllText(destination);
-
-            //file.Close();
         }
 
     }
