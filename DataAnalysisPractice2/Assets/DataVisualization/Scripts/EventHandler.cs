@@ -16,7 +16,8 @@ public class EventHandler : MonoBehaviour
     private string SerializeStandardData(Damageable character)
     {
         string event_data = GetTimestamp() + ElementEnd();                      // Timestamp
-        event_data += character.gameObject.GetInstanceID() + ElementEnd();      // ID
+        //event_data += character.player_id + ElementEnd();                     // TODO: Add a static variable called "player_id" with hardcoded values which identify which player is playing when these events happen
+        event_data += character.gameObject.GetInstanceID() + ElementEnd();      // Entity ID
         event_data += character.transform.position.ToString() + ElementEnd();   // Position
         event_data += character.transform.rotation.eulerAngles.ToString();      // Direction
 
