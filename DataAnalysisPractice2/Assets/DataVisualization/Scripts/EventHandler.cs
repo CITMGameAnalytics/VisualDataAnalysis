@@ -31,7 +31,7 @@ public class EventHandler : MonoBehaviour
         //event_data += character.player_id + SerializeNext();                     // TODO: Add a static variable called "player_id" with hardcoded values which identify which player is playing when these events happen
         event_data += character.gameObject.GetInstanceID() + SerializeNext();      // Entity ID
         event_data += character.transform.position.ToString() + SerializeNext();   // Position
-        event_data += character.transform.rotation.eulerAngles.ToString();          // Direction
+        event_data += character.transform.rotation.eulerAngles.ToString();         // Direction
 
         return event_data;
     }
