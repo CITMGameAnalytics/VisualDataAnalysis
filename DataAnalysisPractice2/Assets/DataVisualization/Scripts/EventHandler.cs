@@ -8,6 +8,7 @@ using Gamekit3D;
 
 public class EventHandler : MonoBehaviour
 {
+    public DataSerializer serializer;
     string directory = "/EventRegister/";
 
     // -------------------------------------- CSV LEGACY CODE --------------------------------------
