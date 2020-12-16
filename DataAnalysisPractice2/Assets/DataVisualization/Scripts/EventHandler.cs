@@ -2,75 +2,122 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using DataVisualizer;
+using Gamekit3D;
+
 public class EventHandler : MonoBehaviour
 {
-    // PLAYER EVENTS
-    // Login Events
-    public void AddNewPlayerEvent(int player_id, string country, string test_group) // User Register
-    {
-        //string event_data = GetTimestamp();
-    }
-
-    public void AddNewSessionEvent(int player_id, int session_id, string start, string end) // User Login
-    {
-        string event_data = GetTimestamp();
-    }
-
-    // Recurrent events
-    public void AddNewWalkingPositionEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Walking on ground (periodical)
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewAirbornePositionEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Being airborne (periodical)
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewKeyPositionEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position while holding key (periodical)
-    {
-        string event_data = GetTimestamp();
-    }
-
-    // Trigger events
-    public void AddNewJumpEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where jumped
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewAttackEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where attacked
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewDamageEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where damaged
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewDeathEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where dead
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewSpawnEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where spawned or respawned
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewInvulnerabilityStartEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where started invulnerability
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public void AddNewInvulnerabilityEndEvent(int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z) // Position where ended invulnerability
-    {
-        string event_data = GetTimestamp();
-    }
-
-    public string GetTimestamp()
+    private string GetTimestamp()
     {
         System.DateTime timestamp = System.DateTime.Now;
         return timestamp.ToString();
+    }
+
+    private string SerializeStandardData(Damageable character)
+    {
+        string event_data = GetTimestamp() + ElementEnd();                      // Timestamp
+        event_data += character.gameObject.GetInstanceID() + ElementEnd();      // ID
+        event_data += character.transform.position.ToString() + ElementEnd();   // Position
+        event_data += character.transform.rotation.eulerAngles.ToString();      // Direction
+
+        return event_data;
+    }
+
+    private string ElementEnd()
+    {
+        return ", ";
+    }
+
+    private string LineEnd()
+    {
+        return ";\n";
+    }
+
+    // PLAYER EVENTS
+    // Login Events
+    public void AddNewPlayerEvent(int player_id, int age, string country, string test_group) // User Register
+    {
+        string event_data = GetTimestamp() + ElementEnd();
+        event_data += player_id.ToString() + ElementEnd();
+        event_data += age.ToString() + ElementEnd();
+        event_data += country + ElementEnd();
+        event_data += test_group;
+
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewSessionEvent(int player_id, int session_id, System.DateTime start, System.DateTime end) // User Login
+    {
+        string event_data = GetTimestamp() + ElementEnd();
+        event_data += player_id.ToString() + ElementEnd();
+        event_data += session_id.ToString() + ElementEnd();
+        event_data += start.ToString() + ElementEnd();
+        event_data += end.ToString();
+
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    // Recurrent events
+    // INFO NEEDED: int entity_id, int pos_x, int pos_y, int pos_z, int rot_x, int rot_y, int rot_z
+    public void AddNewWalkingPositionEvent(Damageable character) // Walking on ground (periodical)
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewAirbornePositionEvent(Damageable character) // Being airborne (periodical)
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewKeyPositionEvent(Damageable character) // Position while holding key (periodical)
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    // Trigger events
+    public void AddNewJumpEvent(Damageable character) // Position where jumped
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewAttackEvent(Damageable character) // Position where attacked
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewDamageEvent(Damageable character) // Position where damaged
+    {
+        string event_data = SerializeStandardData(character) + ElementEnd();
+        event_data += character.currentHitPoints.ToString();    // In addition, we add current HP left
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewDeathEvent(Damageable character) // Position where dead
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewSpawnEvent(Damageable character) // Position where spawned or respawned
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewInvulnerabilityStartEvent(Damageable character) // Position where started invulnerability
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
+    }
+
+    public void AddNewInvulnerabilityEndEvent(Damageable character) // Position where ended invulnerability
+    {
+        string event_data = SerializeStandardData(character);
+        DataSerializer.Print(event_data + LineEnd(), "Assets/EventRegister/WalkingLocations.csv");
     }
 }
