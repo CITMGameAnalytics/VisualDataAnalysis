@@ -17,14 +17,16 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            //dataSerializer._Print("test", "test.csv");
-            //string t = "";
+            //string t = "HEY";
+            //t = JsonUtility.ToJson(t);
+            //dataSerializer._Print(ref t, "test.csv");
+            
             //dataSerializer._Read(ref t, "test.csv");
         }
 
         public static void Print(string s, string filename)
         {
-            dataSerializer._Print(s, filename);
+            dataSerializer._Print(ref s, filename);
         }
 
         public static void Read(ref string s, string filename)
@@ -32,41 +34,25 @@ namespace DataVisualizer
             dataSerializer._Read(ref s, filename);
         }
 
-        public void _Print(string s, string filename)
+        public void _Print(ref string s, string filename)
         {
-            // write csv
             string destination = Application.dataPath + filename;
-            FileStream file;
 
             if (File.Exists(destination))
-                file = File.Open(destination, FileMode.Append);
+                System.IO.File.AppendAllText(destination, s);
             else
-                file = File.Create(destination);
-
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(file, s);
-
-            file.Close();
+            {
+                File.Create(destination);
+                System.IO.File.WriteAllText(destination, s);
+            }
         }
 
         public void _Read(ref string s, string filename)
         {
-            // write csv
             string destination = Application.dataPath + "/" + filename;
-            FileStream file;
 
             if (File.Exists(destination))
-                file = File.OpenRead(destination);
-            else
-            {
-                Debug.LogError("File not found");
-                return;
-            }
-
-            BinaryFormatter bf = new BinaryFormatter();
-            s = bf.Deserialize(file).ToString();
-
-            file.Close();
+                s = System.IO.File.ReadAllText(destination);
         }
 
     }
