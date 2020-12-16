@@ -7,11 +7,6 @@ using Gamekit3D;
 
 public class EventHandler : MonoBehaviour
 {
-    public void Awake()
-    {
-
-    }
-
     private string GetTimestamp()
     {
         System.DateTime timestamp = System.DateTime.Now;
