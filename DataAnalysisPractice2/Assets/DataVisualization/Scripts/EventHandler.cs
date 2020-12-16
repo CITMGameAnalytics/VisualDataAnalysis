@@ -7,6 +7,8 @@ using Gamekit3D;
 
 public class EventHandler : MonoBehaviour
 {
+    string directory = "/EventRegister/";
+
     enum event_types
     {
         EVENT_REGISTER = 1,
@@ -63,7 +65,7 @@ public class EventHandler : MonoBehaviour
         event_data += country + SerializeNext();
         event_data += test_group;
 
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Players.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), "Players.csv");
     }
 
     public void NewSessionEvent(int player_id, int session_id, System.DateTime start, System.DateTime end) // User Login
@@ -76,7 +78,7 @@ public class EventHandler : MonoBehaviour
         event_data += start.ToString() + SerializeNext();
         event_data += end.ToString();
 
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Sessions.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Sessions.csv");
     }
 
     // Recurrent events
@@ -84,62 +86,62 @@ public class EventHandler : MonoBehaviour
     public void NewWalkingPositionEvent(Damageable character) // Walking on ground (periodical)
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_WALK_POS);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/GroundPositions.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "GroundPositions.csv");
     }
 
     public void NewAirbornePositionEvent(Damageable character) // Being airborne (periodical)
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_AIR_POS);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/AirbornePositions.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "AirbornePositions.csv");
     }
 
     public void NewKeyPositionEvent(Damageable character) // Position while holding key (periodical)
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_KEY_POS);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/KeyPositions.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "KeyPositions.csv");
     }
 
     // Trigger events
     public void NewJumpEvent(Damageable character) // Position where jumped
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_JUMP);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Jumps.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Jumps.csv");
     }
 
     public void NewAttackEvent(Damageable character) // Position where attacked
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_ATTACK);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Attacks.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Attacks.csv");
     }
 
     public void NewHitEvent(Damageable character) // Position where damaged
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_HIT) + SerializeNext();
         event_data += character.currentHitPoints.ToString();    // In addition, we add current HP left
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Hits.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Hits.csv");
     }
 
     public void NewDeathEvent(Damageable character) // Position where dead
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_DEATH);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Deaths.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Deaths.csv");
     }
 
     public void NewSpawnEvent(Damageable character) // Position where spawned or respawned
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_SPAWN);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/Spawns.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "Spawns.csv");
     }
 
     public void NewInvulnerabilityStartEvent(Damageable character) // Position where started invulnerability
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_INV_START);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/InvulnerabilityStarts.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "InvulnerabilityStarts.csv");
     }
 
     public void NewInvulnerabilityEndEvent(Damageable character) // Position where ended invulnerability
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_INV_END);
-        DataSerializer.Print(event_data + SerializeEnd(), "Assets/EventRegister/InvulnerabilityEnds.csv");
+        DataSerializer.Print(event_data + SerializeEnd(), directory + "InvulnerabilityEnds.csv");
     }
 }
