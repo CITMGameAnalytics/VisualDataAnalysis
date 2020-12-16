@@ -23,34 +23,15 @@ namespace Events
         EVENT_INV_END
     }
 
-    // EVENT GAME DATA STRUCT
-    public struct GameEventData
-    {
-        public GameEventData(int session_id, int entity_id, Transform trs)
-        {
-            timestamp = System.DateTime.Now;
-            this.session_id = session_id;
-            this.entity_id = entity_id;
-            position = trs.position;
-            rotation = trs.rotation.eulerAngles;
-        }
-
-        System.DateTime timestamp;  // Moment when event happened
-        int session_id;             // Session where event happened
-        int entity_id;              // Entity responsible of event
-        Vector3 position;           // Entity position
-        Vector3 rotation;           // Entity direction
-    }
-
     // EVENT CLASSES
-    public class GenericEvent : MonoBehaviour
+    public class GenericEvent
     {
         protected GenericEvent(event_types event_id)
         {
             this.event_id = event_id;
         }
 
-        public string Serialize(bool pretty = true)
+        public virtual string Serialize(bool pretty)
         {
             return JsonUtility.ToJson(this, pretty);
         }
@@ -67,6 +48,11 @@ namespace Events
             this.age = age;
             this.country = country;
             this.test_group = test_group;
+        }
+
+        public override string Serialize(bool pretty)
+        {
+            return JsonUtility.ToJson(this, pretty);
         }
 
         public static object Deserialize(string json_file)
@@ -86,8 +72,13 @@ namespace Events
         {
             this.player_id = player_id;
             this.session_id = session_id;
-            this.start = start;
-            this.end = end;
+            this.start = start.ToString();
+            this.end = end.ToString();
+        }
+
+        public override string Serialize(bool pretty)
+        {
+            return JsonUtility.ToJson(this, pretty);
         }
 
         public static object Deserialize(string json_file)
@@ -97,8 +88,8 @@ namespace Events
 
         int player_id;
         int session_id;
-        System.DateTime start;
-        System.DateTime end;
+        string start;
+        string end;
     }
 
     // GAME EVENTS
@@ -106,7 +97,16 @@ namespace Events
     {
         public GameEvent(event_types event_id, int session_id, int entity_id, Transform trs) : base(event_id)
         {
-            data = new GameEventData(session_id, entity_id, trs);
+            timestamp = System.DateTime.Now.ToString();
+            this.session_id = session_id;
+            this.entity_id = entity_id;
+            position = trs.position;
+            rotation = trs.rotation.eulerAngles;
+        }
+
+        public override string Serialize(bool pretty)
+        {
+            return JsonUtility.ToJson(this, pretty);
         }
 
         public static object Deserialize(string json_file)
@@ -114,18 +114,27 @@ namespace Events
             return JsonUtility.FromJson<GameEvent>(json_file);
         }
 
-        public GameEventData data;
+        public string timestamp;  // Moment when event happened
+        public int session_id;             // Session where event happened
+        public int entity_id;              // Entity responsible of event
+        public Vector3 position;           // Entity position
+        public Vector3 rotation;           // Entity direction
     }
 
     public class HitEvent : GameEvent
     {
         public HitEvent(int session_id, int entity_id, Transform trs, int hitPoints) : base(event_types.EVENT_HIT, session_id, entity_id, trs)
         {
-            data = new GameEventData(session_id, entity_id, trs);
+            timestamp = System.DateTime.Now.ToString();
+            this.session_id = session_id;
+            this.entity_id = entity_id;
+            position = trs.position;
+            rotation = trs.rotation.eulerAngles;
+
             this.hitPoints = hitPoints;
         }
 
-        public static object Deserialize(string json_file)  // This method overriding the one of the parent obj is intended
+        public static object DeserializeHit(string json_file)  // This method overriding the one of the parent obj is intended
         {
             return JsonUtility.FromJson<HitEvent>(json_file);
         }
