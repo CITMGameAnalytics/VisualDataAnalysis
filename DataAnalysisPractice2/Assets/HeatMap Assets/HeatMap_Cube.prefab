@@ -110,8 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 0.9811321, g: 0.9431036, b: 0, a: 1}
+    key0: {r: 1, g: 0, b: 0, a: 0.50980395}
+    key1: {r: 0.9811321, g: 0.9431036, b: 0, a: 0.50980395}
     key2: {r: 0.020310814, g: 0.9622642, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
