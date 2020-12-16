@@ -14,9 +14,12 @@ public class HM_Manager : MonoBehaviour
     public uint height = 90; //Z axis
     public int map_start_X = -35;
     public int map_start_y = -45;
+    public float cube_size = 1.0f;
 
-    private uint[,] grid;   //This grid will control where each position fits.
+    private float[,] grid;   //This grid will control where each position fits.
     private uint highest_density = 0;
+    private uint final_width = 0;
+    private uint final_height = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +38,10 @@ public class HM_Manager : MonoBehaviour
         positions.Add(new Vector3(2.4f, 0.0f, 2.0f));
         positions.Add(new Vector3(2.4f, 0.0f, 3.0f));
 
-        grid = new uint[width,height];
+        //Redimension the array
+        final_width = (uint)(width / cube_size);
+        final_height = (uint)(height / cube_size);
+        grid = new float[final_width,final_height];
 
         populateGrid();
 
@@ -49,23 +55,24 @@ public class HM_Manager : MonoBehaviour
         
     }
 
-    //This function sorts the list and eliminates duplicate cubes (only 1 cube per "grid" position)
+    //This function eliminates duplicate cubes (only 1 cube per "grid" position)
     private void populateGrid()
     {
-        //positions.Sort();
-
         foreach (Vector3 vec in positions)
         {
-            grid[(int)vec.x - map_start_X, (int)vec.z - map_start_y]++;
+            int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
+            int value_2 = (int)(vec.z / cube_size - map_start_y / cube_size);
+            grid[(int)(vec.x/cube_size - map_start_X/cube_size), (int)(vec.z/cube_size - map_start_y/cube_size)]++;
         }
 
         //Now let's check the highest density value!
-        for (int i = 0; i < width; ++i)
+        for (int i = 0; i < final_width; ++i)
         {
-            for (int j = 0; j < height; ++j)
+            for (int j = 0; j < final_height; ++j)
             {
+                float test = grid[i, j];
                 if (grid[i, j] > highest_density)
-                    highest_density = grid[i, j];
+                    highest_density = (uint)grid[i, j];
             } 
         }
     }
@@ -73,18 +80,15 @@ public class HM_Manager : MonoBehaviour
     //This function will sapwn all the cubes and place them so they can be rendered
     private void displayMap()
     {
-        //foreach(Vector3 vec in positions)
-        //{
-        //    Instantiate(cube_prefab,vec,Quaternion.identity);
-        //}
-
-        for (int i = 0; i < width; ++i)
+        for (int i = 0; i < final_width; ++i)
         {
-            for(int j = 0; j < height; ++j)
+            for(int j = 0; j < final_height; ++j)
             {
                 if (grid[i, j] > 0)
                 {
-                    Instantiate(cube_prefab, new Vector3(i + map_start_X, 0.0f, j + map_start_y), Quaternion.identity);
+                    GameObject go = Instantiate(cube_prefab, new Vector3(i * cube_size + map_start_X, 0.0f, j * cube_size + map_start_y), Quaternion.identity);
+                    HM_Script script = go.GetComponent<HM_Script>();
+                    script.setColor(grid[i, j]/highest_density);
                 }
             }
         }

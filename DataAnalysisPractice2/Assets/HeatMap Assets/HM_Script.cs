@@ -11,15 +11,31 @@ public class HM_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(gradient.Evaluate(0.25f));
         renderer = GetComponent<Renderer>();
         cube_mat = renderer.material;
-        cube_mat.color = gradient.Evaluate(0.25f);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void setColor(float value)
+    {
+        if (value <= 1.0f && value >= 0.0f)
+        {
+            //If the gameobject hasn't yet started but the function is called make sure we assign the material
+            if(cube_mat == null)
+            {
+                renderer = GetComponent<Renderer>();
+                cube_mat = renderer.material;
+                cube_mat.color = gradient.Evaluate(value);
+            }
+                else
+            cube_mat.color = gradient.Evaluate(value);
+        }
+        else
+            Debug.Log("Value was not between 0.0f & 1.0f Value: " + value);
     }
 }
