@@ -117,7 +117,7 @@ public class EventHandler : MonoBehaviour
     public void NewHitEvent(Damageable character) // Position where damaged
     {
         string event_data = SerializeStandardData(character, event_types.EVENT_HIT) + SerializeNext();
-        event_data += character.currentHitPoints.ToString();    // In addition, we add current HP left
+        event_data += character.currentHitPoints.ToString();    // In addition to everything else, we add current HP left
         DataSerializer.Print(event_data + SerializeEnd(), directory + "Hits.csv");
     }
 
