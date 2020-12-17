@@ -30,6 +30,8 @@ public class MeshGenerator : MonoBehaviour
 
         CreateShape();
         UpdateMesh();
+
+        transform.position = new Vector3(0.0f,0.5f,0.0f);
     }
 
 
@@ -41,7 +43,26 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x <= zSize; x++)
             {
-                vertices[i] = new Vector3(x, 0, z);
+
+                // Check the position of the ground with a raycast
+                // This would cast rays only against colliders in layer 22.
+                int layerMask = 1 << 22;
+                layerMask = ~layerMask;
+                float y_position = 0.0f;
+
+                RaycastHit hit;
+                Vector3 point_pos = new Vector3(x + transform.position.x, 30.0f, z + transform.position.z);
+                // Does the ray intersect any objects in layer 22
+                if (Physics.Raycast(point_pos, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+                {
+                    y_position = hit.transform.position.y;
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1000, Color.white);
+                    Debug.Log("Did not Hit");
+                }
+                vertices[i] = new Vector3(x + transform.position.x, y_position, z + transform.position.z);                //X and Z should be the position where the point is located in the real world
                 i++;
             }
         }
