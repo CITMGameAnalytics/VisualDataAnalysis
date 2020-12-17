@@ -17,9 +17,9 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            //string t = "HEY";
+            string t = "HEY";
             //t = JsonUtility.ToJson(t);
-            //dataSerializer._Print(ref t, "test.csv");
+            dataSerializer._Print(ref t, "test.csv");
             
             //dataSerializer._Read(ref t, "test.csv");
         }
@@ -36,13 +36,13 @@ namespace DataVisualizer
 
         public void _Print(ref string s, string filename)
         {
-            string destination = Application.dataPath + filename;
+            string destination = Application.dataPath + "/" + filename;
 
             if (File.Exists(destination))
                 System.IO.File.AppendAllText(destination, s);
             else
             {
-                File.Create(destination);
+                //File.Create(destination);
                 System.IO.File.WriteAllText(destination, s);
             }
         }
