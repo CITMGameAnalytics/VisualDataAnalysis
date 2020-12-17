@@ -17,9 +17,9 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            string t = "HEY";
+            //string t = "HEY";
             //t = JsonUtility.ToJson(t);
-            dataSerializer._Print(ref t, "test.csv");
+            //dataSerializer._Print(ref t, "test.csv");
             
             //dataSerializer._Read(ref t, "test.csv");
         }
