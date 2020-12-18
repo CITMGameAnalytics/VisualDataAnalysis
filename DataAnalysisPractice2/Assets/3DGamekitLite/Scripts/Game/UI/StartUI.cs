@@ -16,6 +16,8 @@ namespace Gamekit3D
         public GameObject optionsCanvas;
         public GameObject controlsCanvas;
         public GameObject audioCanvas;
+        public GameObject statisticsCanvas;
+        public GameObject statisticsViewManager;
 
         protected bool m_InPause;
         protected PlayableDirector[] m_Directors;
@@ -111,6 +113,11 @@ namespace Gamekit3D
             if (audioCanvas)
                 audioCanvas.SetActive(false);
 
+            if (statisticsCanvas)
+            {
+                statisticsViewManager.GetComponent<StatisticsDrawing>().ActivateZenitalView(false);
+                statisticsCanvas.SetActive(false);
+            }
             m_InPause = !m_InPause;
         }
     }
