@@ -27,17 +27,19 @@ public class EventHandler : MonoBehaviour
 
     EventContainer<GameEvent> invStartEventList = new EventContainer<GameEvent>();
     EventContainer<GameEvent> invEndEventList = new EventContainer<GameEvent>();
+    
+    private bool testSerialization = true;
 
-    bool dummy = true;
-
-    void Update()
+    void Update()   // This serves no purpose other than being an example for how to deserialize .cvs files, specifically for Dídac
     {
-        if (dummy && Time.time > 5)
+        if (testSerialization && Time.time > 3)
         {
             EventContainer<GameEvent> dummyContainer = new EventContainer<GameEvent>();
-            dummyContainer.DeserializeList(directory + "Hits.csv");
+            string dummyString = "";
+            DataSerializer.Read(ref dummyString, directory + "Attacks.csv");
+            List<GameEvent> dummyList = dummyContainer.DeserializeList(dummyString);
 
-            dummy = false;
+            testSerialization = false;
         }
     }
 
