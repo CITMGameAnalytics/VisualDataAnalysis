@@ -18,12 +18,15 @@ namespace Gamekit3D
         public GameObject audioCanvas;
         public GameObject statisticsCanvas;
         public GameObject statisticsViewManager;
+        public GameObject heatMapManager_go;
+        private HM_Manager heatMapManager;
 
         protected bool m_InPause;
         protected PlayableDirector[] m_Directors;
 
         void Start()
         {
+            heatMapManager = heatMapManager_go.GetComponent<HM_Manager>();
             if (!alwaysDisplayMouse)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -117,6 +120,7 @@ namespace Gamekit3D
             {
                 statisticsViewManager.GetComponent<StatisticsDrawing>().ActivateZenitalView(false);
                 statisticsCanvas.SetActive(false);
+                heatMapManager.hideAllMaps();
             }
             m_InPause = !m_InPause;
         }

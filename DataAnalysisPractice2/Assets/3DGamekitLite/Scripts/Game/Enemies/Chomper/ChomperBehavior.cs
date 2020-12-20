@@ -1,5 +1,6 @@
 ﻿using Gamekit3D.Message;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gamekit3D
 {
@@ -32,6 +33,8 @@ namespace Gamekit3D
         public TargetScanner playerScanner;
         [Tooltip("Time in seconde before the Chomper stop pursuing the player when the player is out of sight")]
         public float timeToStopPursuit;
+
+        public UnityEvent OnAttack;
 
         [Header("Audio")]
         public RandomAudioPlayer attackAudio;
@@ -214,6 +217,7 @@ namespace Gamekit3D
         public void AttackEnd()
         {
             meleeWeapon.EndAttack();
+            OnAttack.Invoke();
         }
 
         public void OnReceiveMessage(Message.MessageType type, object sender, object msg)
