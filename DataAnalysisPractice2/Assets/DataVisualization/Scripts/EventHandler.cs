@@ -28,7 +28,7 @@ public class EventHandler : MonoBehaviour
     EventContainer<GameEvent> invStartEventList = new EventContainer<GameEvent>();
     EventContainer<GameEvent> invEndEventList = new EventContainer<GameEvent>();
     
-    private bool testSerialization = true;
+    private bool testSerialization = false;
 
     void Update()   // This serves no purpose other than being an example for how to deserialize .cvs files, specifically for Dídac
     {
