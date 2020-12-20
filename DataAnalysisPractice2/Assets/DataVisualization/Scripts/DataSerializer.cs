@@ -10,6 +10,12 @@ namespace DataVisualizer
     {
         public static DataSerializer dataSerializer;
 
+        //[System.Serializable]
+        //private class Wrapper<T>
+        //{
+        //    public T[] Items;
+        //}
+
         private void Awake()
         {
             if (dataSerializer == null)
@@ -17,11 +23,28 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            //string t = "HEY";
-            //t = JsonUtility.ToJson(t);
+            string t = "HEY";
+
+
+            //dataSerializer._Read(ref t, "DataVisualization/DataFiles/InvulnerabilityStarts.csv");
+
+            //// --- Serialize ---
+            //List<Events.HitEvent> hitEvents = new List<Events.HitEvent>();
+            //hitEvents.Add(new Events.HitEvent(0, 0, gameObject.transform, 0));
+            //hitEvents.Add(new Events.HitEvent(0, 0, gameObject.transform, 0));
+
+            //Wrapper<Events.HitEvent> wrapper = new Wrapper<Events.HitEvent>();
+            //wrapper.Items = hitEvents.ToArray();
+            //t = JsonUtility.ToJson(wrapper, true);
+
             //dataSerializer._Print(ref t, "test.csv");
-            
+
+            //// --- Deserialize ---
             //dataSerializer._Read(ref t, "test.csv");
+
+            //Wrapper<Events.HitEvent> Dewrapper = JsonUtility.FromJson<Wrapper<Events.HitEvent>>(t);
+            //hitEvents.AddRange(Dewrapper.Items);
+
         }
 
         public static void Print(string s, string filename)

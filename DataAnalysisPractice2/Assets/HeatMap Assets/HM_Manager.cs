@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 public class HM_Manager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class HM_Manager : MonoBehaviour
     private uint highest_density = 0;
     private uint final_width = 0;
     private uint final_height = 0;
+
+    public List<GameEvent> game_events;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,7 @@ public class HM_Manager : MonoBehaviour
         final_height = (uint)(height / cube_size);
         grid = new float[final_width,final_height];
 
+        deserializeEvents();
         populateGrid();
 
         //Print the HeatMap
@@ -55,13 +59,19 @@ public class HM_Manager : MonoBehaviour
         
     }
 
+    //Function to test and deserialize the events on the 
+    private void deserializeEvents()
+    {
+
+    }
+
     //This function eliminates duplicate cubes (only 1 cube per "grid" position)
     private void populateGrid()
     {
         foreach (Vector3 vec in positions)
         {
-            int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
-            int value_2 = (int)(vec.z / cube_size - map_start_y / cube_size);
+            //int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
+            //int value_2 = (int)(vec.z / cube_size - map_start_y / cube_size);
             grid[(int)(vec.x/cube_size - map_start_X/cube_size), (int)(vec.z/cube_size - map_start_y/cube_size)]++;
         }
 
@@ -77,7 +87,7 @@ public class HM_Manager : MonoBehaviour
         }
     }
 
-    //This function will sapwn all the cubes and place them so they can be rendered
+    //This function will spawn all the cubes and place them so they can be rendered
     private void displayMap()
     {
         for (int i = 0; i < final_width; ++i)

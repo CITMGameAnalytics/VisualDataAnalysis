@@ -121,6 +121,8 @@ namespace Events
         public Vector3 rotation;           // Entity direction
     }
 
+    //[System.Serializable]
+
     public class HitEvent : GameEvent
     {
         public HitEvent(int session_id, int entity_id, Transform trs, int hitPoints) : base(event_types.EVENT_HIT, session_id, entity_id, trs)
