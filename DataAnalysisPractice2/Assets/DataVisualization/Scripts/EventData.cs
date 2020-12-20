@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using Gamekit3D;
 
@@ -23,7 +24,55 @@ namespace Events
         EVENT_INV_END
     }
 
+    // EVENT CONTAINER
+    public class EventContainer<ContainerEventType>  // Has a propper list and a wrapper object class to serialize it
+    {
+        [System.Serializable]
+        public class EventWrapper<WrapperEventType>   // Object class which only purpose is to contain an array to de/serialize
+        {
+            public int Length
+            {
+                get { return events.Length; }
+            }
+
+            public WrapperEventType[] events;
+        }
+
+        public void Add(ContainerEventType eventEntry)
+        {
+            eventList.Add(eventEntry);
+        }
+
+        public string SerializeList(bool pretty = true)
+        {
+            eventWrapper.events = eventList.ToArray();
+            string s = JsonUtility.ToJson(eventWrapper, pretty);
+            return s;
+        }
+
+        public List<ContainerEventType> DeserializeList(string json_file)
+        {
+            eventWrapper = JsonUtility.FromJson<EventWrapper<ContainerEventType>>(json_file);
+            eventList = eventWrapper.events.ToList();
+            return eventList;
+        }
+
+        public int Count
+        {
+            get { return eventList.Count; }
+        }
+
+        public int Length
+        {
+            get { return eventWrapper.events.Length; }
+        }
+
+        public List<ContainerEventType> eventList = new List<ContainerEventType>();
+        public EventWrapper<ContainerEventType> eventWrapper = new EventWrapper<ContainerEventType>();
+    }
+
     // EVENT CLASSES
+    [System.Serializable]
     public class GenericEvent
     {
         protected GenericEvent(event_types event_id)
@@ -40,6 +89,7 @@ namespace Events
     }
 
     // LOGIN EVENTS
+    [System.Serializable]
     public class RegisterEvent : GenericEvent  // First Time Login Event
     {
         public RegisterEvent(int player_id, int age, string country, string test_group) : base(event_types.EVENT_REGISTER)
@@ -55,17 +105,13 @@ namespace Events
             return JsonUtility.ToJson(this, pretty);
         }
 
-        public static object Deserialize(string json_file)
-        {
-            return JsonUtility.FromJson<RegisterEvent>(json_file);
-        }
-
         int player_id;
         int age;
         string country;
         string test_group;
     }
 
+    [System.Serializable]
     public class SessionEvent : GenericEvent   // Session End Event
     {
         public SessionEvent(int player_id, int session_id, System.DateTime start, System.DateTime end) : base(event_types.EVENT_SESSION)
@@ -81,11 +127,6 @@ namespace Events
             return JsonUtility.ToJson(this, pretty);
         }
 
-        public static object Deserialize(string json_file)
-        {
-            return JsonUtility.FromJson<SessionEvent>(json_file);
-        }
-
         int player_id;
         int session_id;
         string start;
@@ -93,6 +134,7 @@ namespace Events
     }
 
     // GAME EVENTS
+    [System.Serializable]
     public class GameEvent : GenericEvent
     {
         public GameEvent(event_types event_id, int session_id, int entity_id, Transform trs) : base(event_id)
@@ -109,11 +151,6 @@ namespace Events
             return JsonUtility.ToJson(this, pretty);
         }
 
-        public static object Deserialize(string json_file)
-        {
-            return JsonUtility.FromJson<GameEvent>(json_file);
-        }
-
         public string timestamp;  // Moment when event happened
         public int session_id;             // Session where event happened
         public int entity_id;              // Entity responsible of event
@@ -121,6 +158,7 @@ namespace Events
         public Vector3 rotation;           // Entity direction
     }
 
+    [System.Serializable]
     public class HitEvent : GameEvent
     {
         public HitEvent(int session_id, int entity_id, Transform trs, int hitPoints) : base(event_types.EVENT_HIT, session_id, entity_id, trs)
@@ -132,11 +170,6 @@ namespace Events
             rotation = trs.rotation.eulerAngles;
 
             this.hitPoints = hitPoints;
-        }
-
-        public static object DeserializeHit(string json_file)  // This method overriding the one of the parent obj is intended
-        {
-            return JsonUtility.FromJson<HitEvent>(json_file);
         }
 
         int hitPoints;
