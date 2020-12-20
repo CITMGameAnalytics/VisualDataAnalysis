@@ -172,6 +172,6 @@ namespace Events
             this.hitPoints = hitPoints;
         }
 
-        int hitPoints;
+        public int hitPoints;
     }
 }
