@@ -4,6 +4,8 @@ using Gamekit3D.Message;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
+
 #if UNITY_EDITOR
 using MessageType = UnityEditor.MessageType;
 #endif
@@ -26,6 +28,8 @@ namespace Gamekit3D
         public TargetScanner playerScanner;
         public float fleeingDistance = 3.0f;
         public RangeWeapon rangeWeapon;
+
+        public UnityEvent OnAttack;
 
         [Header("Audio")]
         public RandomAudioPlayer attackAudio;
@@ -115,6 +119,7 @@ namespace Gamekit3D
         public void Shoot()
         {
             rangeWeapon.Attack(m_RememberedTargetPosition);
+            OnAttack.Invoke();
         }
 
         public void TriggerAttack()
