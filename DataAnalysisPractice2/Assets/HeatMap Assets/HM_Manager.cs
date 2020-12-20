@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Events;
+using DataVisualizer;
 
 public class HM_Manager : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class HM_Manager : MonoBehaviour
     private uint highest_density = 0;
     private uint final_width = 0;
     private uint final_height = 0;
+
+    [Header("Deserialization")]
+    public DataSerializer serializer;
+    string directory = "/DataVisualization/DataFiles/";
 
     public List<GameEvent> game_events;
 
@@ -65,6 +70,11 @@ public class HM_Manager : MonoBehaviour
     //Function to test and deserialize the events on the 
     private void deserializeEvents()
     {
+            EventContainer<GameEvent> dummyContainer = new EventContainer<GameEvent>();
+            string dummyString = "";
+            DataSerializer.Read(ref dummyString, directory + "Attacks.csv");
+            List<GameEvent> dummyList = dummyContainer.DeserializeList(dummyString);
+
 
     }
 
