@@ -14,7 +14,7 @@ namespace Gamekit3D
         public static PlayerController instance { get { return s_Instance; } }
 
         // Events
-        public UnityEvent OnRespawn, OnWalking, OnJump, OnAttack;
+        public UnityEvent OnRespawn, OnWalking, OnJump, OnAttack, OnAirborne;
 
         public bool respawning { get { return m_Respawning; } }
 
@@ -273,6 +273,7 @@ namespace Gamekit3D
 
             // Set the animator parameter to control what animation is being played.
             m_Animator.SetFloat(m_HashForwardSpeed, m_ForwardSpeed);
+
         }
 
         // Called each physics step.
@@ -315,6 +316,8 @@ namespace Gamekit3D
                 
                 // If Ellen is airborne, apply gravity.
                 m_VerticalSpeed -= gravity * Time.deltaTime;
+
+                OnAirborne.Invoke();
             }
         }
 
@@ -522,11 +525,15 @@ namespace Gamekit3D
                     movement = m_Animator.deltaPosition;
                     m_CurrentWalkingSurface = null;
                 }
+
+                OnWalking.Invoke();
+
             }
             else
             {
                 // If not grounded the movement is just in the forward direction.
                 movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
+                
             }
 
             // Rotate the transform of the character controller by the animation's root rotation.

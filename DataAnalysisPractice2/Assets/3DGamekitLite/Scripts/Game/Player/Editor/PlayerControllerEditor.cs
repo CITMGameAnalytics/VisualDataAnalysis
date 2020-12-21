@@ -29,7 +29,7 @@ namespace Gamekit3D
         SerializedProperty m_EmoteAttackPlayerProp;
         SerializedProperty m_EmoteJumpPlayerProp;
 
-        SerializedProperty OnRespawn, OnWalking, OnJump, OnAttack;
+        SerializedProperty OnRespawn, OnWalking, OnJump, OnAttack, OnAirborne;
 
         GUIContent m_ScriptContent = new GUIContent("Script");
 
@@ -76,6 +76,8 @@ namespace Gamekit3D
             OnWalking = serializedObject.FindProperty("OnWalking");
             OnJump = serializedObject.FindProperty("OnJump");
             OnAttack = serializedObject.FindProperty("OnAttack");
+            OnAirborne = serializedObject.FindProperty("OnAirborne");
+
         }
 
         public override void OnInspectorGUI()
@@ -118,7 +120,8 @@ namespace Gamekit3D
             EditorGUILayout.PropertyField(OnRespawn);
             EditorGUILayout.PropertyField(OnWalking);
             EditorGUILayout.PropertyField(OnJump);
-            EditorGUILayout.PropertyField(OnAttack);
+            EditorGUILayout.PropertyField(OnAttack); 
+            EditorGUILayout.PropertyField(OnAirborne);
 
             serializedObject.ApplyModifiedProperties();
         }
