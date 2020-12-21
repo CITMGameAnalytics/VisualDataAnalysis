@@ -29,6 +29,16 @@
             "gender": "F",
             "country": "United States",
             "test_group": "B"
+        },
+        {
+            "event_id": 1,
+            "player_id": 3,
+            "first_name": "Lasse",
+            "second_name": "Loepfe",
+            "age": 24,
+            "gender": "M",
+            "country": "Germany",
+            "test_group": "B"
         }
     ]
 }
