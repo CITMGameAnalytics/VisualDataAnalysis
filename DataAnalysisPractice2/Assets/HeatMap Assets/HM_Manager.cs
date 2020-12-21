@@ -39,24 +39,25 @@ public class HM_Manager : MonoBehaviour
         positions = new List<Vector3>();
 
         //Hardcoding some positions
-        positions.Add(new Vector3(0.0f,0.0f,0.0f));
-        positions.Add(new Vector3(1.0f, 0.0f, 0.0f));
-        positions.Add(new Vector3(2.5f, 0.0f, 0.0f));
-        positions.Add(new Vector3(2.3f, 0.0f, 0.0f));
-        positions.Add(new Vector3(2.0f, 0.0f, 0.0f));
-        positions.Add(new Vector3(2.4f, 0.0f, 0.0f));
-        positions.Add(new Vector3(2.4f, 0.0f, 1.0f));
-        positions.Add(new Vector3(2.4f, 0.0f, 2.0f));
-        positions.Add(new Vector3(2.4f, 0.0f, 3.0f));
+        //positions.Add(new Vector3(0.0f,0.0f,0.0f));
+        //positions.Add(new Vector3(1.0f, 0.0f, 0.0f));
+        //positions.Add(new Vector3(2.5f, 0.0f, 0.0f));
+        //positions.Add(new Vector3(2.3f, 0.0f, 0.0f));
+        //positions.Add(new Vector3(2.0f, 0.0f, 0.0f));
+        //positions.Add(new Vector3(2.4f, 0.0f, 0.0f));
+        //positions.Add(new Vector3(2.4f, 0.0f, 1.0f));
+        //positions.Add(new Vector3(2.4f, 0.0f, 2.0f));
+        //positions.Add(new Vector3(2.4f, 0.0f, 3.0f));
 
         //Redimension the array
         final_width = (uint)(width / cube_size);
         final_height = (uint)(height / cube_size);
         grid = new float[final_width,final_height];
 
-        deserializeEvents();
-        populateGrid();
+        if(ev_handler != null && ev_handler.walkEventContainer != null && ev_handler.walkEventContainer.eventList != null)
+        loadEvents(ev_handler.attackEventContainer.eventList);    //Testing with walk events list
 
+        populateGrid();
         //Print the HeatMap
         displayMap();
     }
@@ -78,13 +79,21 @@ public class HM_Manager : MonoBehaviour
 
     }
 
+    private void loadEvents(List<GameEvent> events)
+    {
+        foreach(GameEvent ge in events)
+        {
+            positions.Add(ge.position);
+        }
+    }
+
     //This function eliminates duplicate cubes (only 1 cube per "grid" position)
     private void populateGrid()
     {
         foreach (Vector3 vec in positions)
         {
-            //int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
-            //int value_2 = (int)(vec.z / cube_size - map_start_y / cube_size);
+            int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
+            int value_2 = (int)(vec.z / cube_size - map_start_y / cube_size);
             grid[(int)(vec.x/cube_size - map_start_X/cube_size), (int)(vec.z/cube_size - map_start_y/cube_size)]++;
         }
 
