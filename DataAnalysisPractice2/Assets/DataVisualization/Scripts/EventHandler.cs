@@ -234,7 +234,7 @@ public class EventHandler : MonoBehaviour
     // Game Recurrent Events
     public void NewWalkingPositionEvent(Damageable character) // Walking on ground (periodical)
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_WALK_POS, - 1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_WALK_POS, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         walkEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -243,7 +243,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewAirbornePositionEvent(Damageable character) // Being airborne (periodical)
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_AIR_POS, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_AIR_POS, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         airEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -252,7 +252,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewKeyPositionEvent(Damageable character) // Position while holding key (periodical)
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_KEY_POS, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_KEY_POS, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         keyEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -262,7 +262,7 @@ public class EventHandler : MonoBehaviour
     // Game Trigger Events
     public void NewJumpEvent(Damageable character) // Position where jumped
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_JUMP, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_JUMP, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         jumpEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -271,7 +271,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewAttackEvent(Damageable character) // Position where attacked
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_ATTACK, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_ATTACK, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         attackEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -280,7 +280,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewHitEvent(Damageable character) // Position where damaged
     {
-        HitEvent gameEvent = new HitEvent(-1, character.gameObject.GetInstanceID(), character.transform, character.currentHitPoints);
+        HitEvent gameEvent = new HitEvent(sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform, character.currentHitPoints);
         hitEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -289,7 +289,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewDeathEvent(Damageable character) // Position where dead
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_DEATH, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_DEATH, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         deathEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -298,7 +298,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewSpawnEvent(Damageable character) // Position where spawned or respawned
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_SPAWN, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_SPAWN, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         spawnEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -307,7 +307,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewInvulnerabilityStartEvent(Damageable character) // Position where started invulnerability
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_INV_START, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_INV_START, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         invStartEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
@@ -316,7 +316,7 @@ public class EventHandler : MonoBehaviour
 
     public void NewInvulnerabilityEndEvent(Damageable character) // Position where ended invulnerability
     {
-        GameEvent gameEvent = new GameEvent(event_types.EVENT_INV_END, -1, character.gameObject.GetInstanceID(), character.transform);
+        GameEvent gameEvent = new GameEvent(event_types.EVENT_INV_END, sessionSimulator.currentSession.session_id, character.gameObject.GetInstanceID(), character.transform);
         invEndEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
