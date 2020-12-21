@@ -23,7 +23,7 @@ namespace DataVisualizer
             else
                 Destroy(gameObject);
 
-            string t = "HEY";
+            //string t = "HEY";
 
 
             //dataSerializer._Read(ref t, "DataVisualization/DataFiles/InvulnerabilityStarts.csv");
