@@ -111,6 +111,8 @@ public class HM_Manager : MonoBehaviour
     //This function eliminates duplicate cubes (only 1 cube per "grid" position)
     private void populateGrid()
     {
+        grid = new float[final_width, final_height];
+        highest_density = 0;
         foreach (Vector3 vec in positions)
         {
             int value_1 = (int)(vec.x / cube_size - map_start_X / cube_size);
@@ -169,8 +171,21 @@ public class HM_Manager : MonoBehaviour
     }
 
     //Sets all cubes from a dictionary list as active
+    public void drawMap(int cube_list)
+    {
+        hideAllMaps();
+        if (cubes_dictionary.ContainsKey((cube_list)))
+        {
+            List<GameObject> gos = cubes_dictionary[cube_list];
+
+            for (int i = 0; i < gos.Count; i++)
+                gos[i].SetActive(true);
+        }
+    }
+
     public void drawMap(CubeLists cube_list)
     {
+        hideAllMaps();
         if (cubes_dictionary.ContainsKey((int)cube_list))
         {
             List<GameObject> gos = cubes_dictionary[(int)cube_list];
