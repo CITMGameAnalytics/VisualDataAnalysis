@@ -39,57 +39,57 @@ public class EventHandler : MonoBehaviour
 
         // Sessions
         DataSerializer.Read(ref json_file, directory + "Sessions.csv");
-        registerEventContainer.DeserializeList(json_file);
+        sessionEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Walks
         DataSerializer.Read(ref json_file, directory + "GroundPositions.csv");
-        registerEventContainer.DeserializeList(json_file);
+        walkEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Airs
         DataSerializer.Read(ref json_file, directory + "AirbornePositions.csv");
-        registerEventContainer.DeserializeList(json_file);
+        airEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Keys
         DataSerializer.Read(ref json_file, directory + "KeyPositions.csv");
-        registerEventContainer.DeserializeList(json_file);
+        keyEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Jumps
         DataSerializer.Read(ref json_file, directory + "Jumps.csv");
-        registerEventContainer.DeserializeList(json_file);
+        jumpEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Attacks
         DataSerializer.Read(ref json_file, directory + "Attacks.csv");
-        registerEventContainer.DeserializeList(json_file);
+        attackEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Hits
         DataSerializer.Read(ref json_file, directory + "Hits.csv");
-        registerEventContainer.DeserializeList(json_file);
+        hitEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Deaths
         DataSerializer.Read(ref json_file, directory + "Deaths.csv");
-        registerEventContainer.DeserializeList(json_file);
+        deathEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Spawns
         DataSerializer.Read(ref json_file, directory + "Spawns.csv");
-        registerEventContainer.DeserializeList(json_file);
+        spawnEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Invinicibility Starts
         DataSerializer.Read(ref json_file, directory + "InvulnerabilityStarts.csv");
-        registerEventContainer.DeserializeList(json_file);
+        invStartEventContainer.DeserializeList(json_file);
         json_file = "";
 
         // Invincibility Ends
         DataSerializer.Read(ref json_file, directory + "InvulnerabilityEnds.csv");
-        registerEventContainer.DeserializeList(json_file);
+        invEndEventContainer.DeserializeList(json_file);
         json_file = "";
     }
 

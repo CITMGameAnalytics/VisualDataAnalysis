@@ -1,7 +1,7 @@
 {
     "events": [
         {
-            "event_id": 11,
+            "event_id": 8,
             "timestamp": "21/12/2020 15:49:49",
             "session_id": -1,
             "entity_id": 17728,
@@ -14,10 +14,11 @@
                 "x": 0.0,
                 "y": 93.49505615234375,
                 "z": 0.0
-            }
+            },
+            "hitPoints": 4
         },
         {
-            "event_id": 11,
+            "event_id": 8,
             "timestamp": "21/12/2020 15:49:57",
             "session_id": -1,
             "entity_id": 17728,
@@ -30,7 +31,8 @@
                 "x": 0.0,
                 "y": 85.08710479736328,
                 "z": 0.0
-            }
+            },
+            "hitPoints": 3
         }
     ]
 }
