@@ -39,6 +39,16 @@
             "gender": "M",
             "country": "Germany",
             "test_group": "B"
+        },
+        {
+            "event_id": 1,
+            "player_id": 8,
+            "first_name": "Tyree",
+            "second_name": "Gustiuts",
+            "age": 12,
+            "gender": "M",
+            "country": "Japan",
+            "test_group": "B"
         }
     ]
 }
