@@ -208,9 +208,9 @@ public class EventHandler : MonoBehaviour
     // -------------------------------------- CSV LEGACY CODE --------------------------------------
 
     // Session Events
-    public void NewRegisterEvent(int player_id, int age, string country, string test_group) // User Register
+    public void NewRegisterEvent(int player_id, string first_name, string second_name, int age, string country, string test_group) // User Register
     {
-        RegisterEvent registerEvent = new RegisterEvent(player_id, age, country, test_group);
+        RegisterEvent registerEvent = new RegisterEvent(player_id, first_name, second_name, age, country, test_group);
         registerEventContainer.Add(registerEvent);
 
         //string event_data = registerEvent.Serialize(true);
