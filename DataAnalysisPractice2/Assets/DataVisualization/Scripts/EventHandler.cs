@@ -14,7 +14,7 @@ public class EventHandler : MonoBehaviour
     string directory = "/DataVisualization/DataFiles/";
 
     // Event Lists
-    EventContainer<RegisterEvent> registerEventContainer = new EventContainer<RegisterEvent>();
+    public EventContainer<RegisterEvent> registerEventContainer = new EventContainer<RegisterEvent>();  // Public because PlayerSessionSimulator accesses to it to ensure players are not repeated
     EventContainer<SessionEvent> sessionEventContainer = new EventContainer<SessionEvent>();
 
     EventContainer<GameEvent> walkEventContainer = new EventContainer<GameEvent>();
@@ -93,6 +93,8 @@ public class EventHandler : MonoBehaviour
         DataSerializer.Read(ref json_file, directory + "InvulnerabilityEnds.csv");
         invEndEventContainer.DeserializeList(json_file);
         json_file = "";
+
+        sessionSimulator.PlayerLogin(); // Handler tells PlayerSessionSimulator that it can now access the register list in order to check if the current player is already registered, and do other operations
     }
 
     private bool testSerialization = false;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Events;
 
-public class PlayerSessionSimulator : MonoBehaviour
+public class PlayerSessionSimulator : MonoBehaviour // This class' entire purpose is to "simulate" a player from a plyerbase starting and ending a session in the game
 {
     public EventHandler eventHandler;
 
@@ -34,10 +34,10 @@ public class PlayerSessionSimulator : MonoBehaviour
     public player_data[] playerbase = new player_data[10] {
         new player_data(1, "Agustin", "Sarin", 21, "M", "United Kingdom", "A"),
         new player_data(2, "Sol", "Coolbaugh", 14, "M", "India", "A"),
-        new player_data(3, "Johnny", "Trumbo", 24, "M", "Germany", "B"),
+        new player_data(3, "Lasse", "Loepfe", 24, "M", "Germany", "B"),
         new player_data(4, "Ena", "Chivers", 35, "F", "France", "A"),
         new player_data(5, "Clarine", "Faubers", 42, "F", "United States", "B"),
-        new player_data(6, "Hoyt", "Bewley", 71, "M", "Brazil", "A"),
+        new player_data(6, "Ricard", "Pillosu", 71, "M", "Brazil", "A"),
         new player_data(7, "Lakenya", "Bushmaker", 57, "F", "China", "B"),
         new player_data(8, "Tyree", "Gustiuts", 12, "M", "Japan", "B"),
         new player_data(9, "Esteban", "Dacenzo", 17, "M", "Norway", "B"),
@@ -53,29 +53,39 @@ public class PlayerSessionSimulator : MonoBehaviour
     }
     public session_data currentSession = new session_data();
 
-    // Start is called before the first frame update
-    void Awake()
+    public void PlayerLogin()   //Called right after all json files are read and added into C# Event Containers in order to append the User Registration to it
     {
         RandomizePlayer();  // Choose a player from the playerbase
         RandomizeSession(); // Create a session event entry
+    }
+
+    private void RandomizePlayer()  // Choose a random player from playerbase, if player already played before (present in the register event container), do not add him again, otherwise add a new register event
+    {
+        bool playerFound = false;
+        currentPlayer = playerbase[Random.Range(0, 10)];
+
+        foreach (RegisterEvent registeredPlayers in eventHandler.registerEventContainer.eventList) {
+            if (registeredPlayers.player_id == currentPlayer.player_id)
+            {
+                playerFound = true;
+                break;
+            }
+        }
+
+        if (!playerFound)
+            eventHandler.NewRegisterEvent(currentPlayer.player_id, currentPlayer.first_name, currentPlayer.second_name, currentPlayer.age, currentPlayer.gender, currentPlayer.country, currentPlayer.test_group);
+    }
+
+    private void RandomizeSession() // Assign the current player to the session and give it a randomized session_id
+    {
+        currentSession.player_id = currentPlayer.player_id;
+        currentSession.session_id = Random.Range(0, 999999999);
+        currentSession.start = System.DateTime.Now;
     }
 
     public void RecordSessionEvent()
     {
         currentSession.end = System.DateTime.Now;
         eventHandler.NewSessionEvent(currentSession.player_id, currentSession.session_id, currentSession.start, currentSession.end);
-    }
-
-    private void RandomizePlayer()
-    {
-        currentPlayer = playerbase[Random.Range(1, 11)];
-        eventHandler.NewRegisterEvent(currentPlayer.player_id, currentPlayer.first_name, currentPlayer.second_name, currentPlayer.age, currentPlayer.gender, currentPlayer.country, currentPlayer.test_group);
-    }
-
-    private void RandomizeSession()
-    {
-        currentSession.player_id = currentPlayer.player_id;
-        currentSession.session_id = Random.Range(0, 999999999);
-        currentSession.start = System.DateTime.Now;
     }
 }
