@@ -9,6 +9,8 @@ using Gamekit3D;
 public class EventHandler : MonoBehaviour
 {
     public DataSerializer serializer;
+    public PlayerSessionSimulator sessionSimulator;
+
     string directory = "/DataVisualization/DataFiles/";
 
     // Event Lists
