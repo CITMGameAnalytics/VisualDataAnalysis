@@ -25,7 +25,6 @@ public class HM_Manager : MonoBehaviour
 
     [Header("Deserialization")]
     public EventHandler ev_handler;
-    string directory = "/DataVisualization/DataFiles/";
 
     public List<GameEvent> game_events;
 
@@ -118,7 +117,26 @@ public class HM_Manager : MonoBehaviour
             {
                 if (grid[i, j] > 0)
                 {
-                    GameObject go = Instantiate(cube_prefab, new Vector3(i * cube_size + map_start_X, 0.0f, j * cube_size + map_start_y), Quaternion.identity);
+                    GameObject go = Instantiate(cube_prefab, new Vector3(i * cube_size + map_start_X, 30.0f, j * cube_size + map_start_y), Quaternion.identity);
+                    
+                    // Check the position of the ground with a raycast
+                // This would cast rays only against colliders in layer 22.
+                int layerMask = 1 << 22;
+                layerMask = ~layerMask;
+                float y_position = 0.0f;
+
+                RaycastHit hit;
+                Vector3 point_pos = go.transform.position;
+                // Does the ray intersect any objects in layer 22
+                if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.down), out hit))
+                {
+                    y_position = go.transform.position.y - hit.distance;
+                }
+                else
+                {
+                    Debug.Log("Did not Hit");
+                }
+                    go.transform.position =new Vector3(go.transform.position.x, y_position + cube_size/2, go.transform.position.z);
                     HM_Script script = go.GetComponent<HM_Script>();
                     script.setColor(grid[i, j]/highest_density);
                     heatMapObjects.Add(go);

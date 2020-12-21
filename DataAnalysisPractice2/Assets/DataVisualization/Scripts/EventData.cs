@@ -163,10 +163,10 @@ namespace Events
         }
 
         public string timestamp;  // Moment when event happened
-        public int session_id;             // Session where event happened
-        public int entity_id;              // Entity responsible of event
-        public Vector3 position;           // Entity position
-        public Vector3 rotation;           // Entity direction
+        public int session_id;    // Session where event happened
+        public int entity_id;     // Entity responsible of event
+        public Vector3 position;  // Entity position
+        public Vector3 rotation;  // Entity direction
     }
 
     [System.Serializable]
