@@ -20,6 +20,7 @@ namespace Gamekit3D
         public bool followNavmeshAgent { get { return m_FollowNavmeshAgent; } }
         public bool grounded { get { return m_Grounded; } }
 
+
         protected NavMeshAgent m_NavMeshAgent;
         protected bool m_FollowNavmeshAgent;
         protected Animator m_Animator;

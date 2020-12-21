@@ -2,6 +2,7 @@ using UnityEngine;
 using Gamekit3D.Message;
 using System.Collections;
 using UnityEngine.XR.WSA;
+using UnityEngine.Events;
 
 namespace Gamekit3D
 {
@@ -11,6 +12,9 @@ namespace Gamekit3D
     {
         protected static PlayerController s_Instance;
         public static PlayerController instance { get { return s_Instance; } }
+
+        // Events
+        public UnityEvent OnRespawn, OnWalking, OnJump, OnAttack;
 
         public bool respawning { get { return m_Respawning; } }
 
@@ -96,6 +100,7 @@ namespace Gamekit3D
         readonly int m_HashEllenCombo3 = Animator.StringToHash("EllenCombo3");
         readonly int m_HashEllenCombo4 = Animator.StringToHash("EllenCombo4");
         readonly int m_HashEllenDeath = Animator.StringToHash("EllenDeath");
+
 
         // Tags
         readonly int m_HashBlockInput = Animator.StringToHash("BlockInput");
@@ -289,6 +294,7 @@ namespace Gamekit3D
                     m_VerticalSpeed = jumpSpeed;
                     m_IsGrounded = false;
                     m_ReadyToJump = false;
+                    OnJump.Invoke();
                 }
             }
             else
@@ -531,7 +537,7 @@ namespace Gamekit3D
 
             // Move the character controller.
             m_CharCtrl.Move(movement);
-
+            m_CharCtrl.Move(movement);
             // After the movement store whether or not the character controller is grounded.
             m_IsGrounded = m_CharCtrl.isGrounded;
 
@@ -554,6 +560,7 @@ namespace Gamekit3D
         // This is called by an animation event when Ellen finishes swinging her staff.
         public void MeleeAttackEnd()
         {
+            OnAttack.Invoke();
             meleeWeapon.EndAttack();
             m_InAttack = false;
         }
@@ -610,7 +617,7 @@ namespace Gamekit3D
             // Wait for the screen to fade in.
             // Currently it is not important to yield here but should some changes occur that require waiting until a respawn has finished this will be required.
             yield return StartCoroutine(ScreenFader.FadeSceneIn());
-            
+
             m_Damageable.ResetDamage();
         }
 
@@ -618,7 +625,8 @@ namespace Gamekit3D
         public void RespawnFinished()
         {
             m_Respawning = false;
-            
+            OnRespawn.Invoke();
+
             //we set the damageable invincible so we can't get hurt just after being respawned (feel like a double punitive)
             m_Damageable.isInvulnerable = false;
         }

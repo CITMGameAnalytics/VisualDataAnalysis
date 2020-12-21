@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Events;
+using DataVisualizer;
 
 public class HM_Manager : MonoBehaviour
 {
@@ -22,7 +23,14 @@ public class HM_Manager : MonoBehaviour
     private uint final_width = 0;
     private uint final_height = 0;
 
+    [Header("Deserialization")]
+    public DataSerializer serializer;
+    string directory = "/DataVisualization/DataFiles/";
+
     public List<GameEvent> game_events;
+
+    //List of game objects
+    private List<GameObject> heatMapObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +70,11 @@ public class HM_Manager : MonoBehaviour
     //Function to test and deserialize the events on the 
     private void deserializeEvents()
     {
+            EventContainer<GameEvent> dummyContainer = new EventContainer<GameEvent>();
+            string dummyString = "";
+            DataSerializer.Read(ref dummyString, directory + "Attacks.csv");
+            List<GameEvent> dummyList = dummyContainer.DeserializeList(dummyString);
+
 
     }
 
@@ -99,8 +112,28 @@ public class HM_Manager : MonoBehaviour
                     GameObject go = Instantiate(cube_prefab, new Vector3(i * cube_size + map_start_X, 0.0f, j * cube_size + map_start_y), Quaternion.identity);
                     HM_Script script = go.GetComponent<HM_Script>();
                     script.setColor(grid[i, j]/highest_density);
+                    heatMapObjects.Add(go);
+                    go.SetActive(false);
                 }
             }
         }
     }
+
+    public void drawMap()
+    {
+        for (int i = 0; i < heatMapObjects.Count; i++)
+            heatMapObjects[i].SetActive(true);
+    }
+
+    public void hideMap()
+    {
+        for (int i = 0; i < heatMapObjects.Count; i++)
+            heatMapObjects[i].SetActive(false);
+    }
+
+    public void hideAllMaps()
+    {
+        hideMap();
+    }
+
 }
