@@ -4,6 +4,21 @@ using UnityEngine;
 using Events;
 using DataVisualizer;
 
+public enum CubeLists
+{
+    WALK_EVENT = 0,
+    AIR_EVENT,
+    KEY_EVENT,
+    JUMP_EVENT,
+    ATTACK_EVENT,
+    HIT_EVENT,
+    DEATH_EVENT,
+    SPAWN_EVENT,
+    INV_START_EVENT,
+    INV_END_EVENT,
+    MAX_EVENTS
+}
+
 public class HM_Manager : MonoBehaviour
 {
 
@@ -27,6 +42,8 @@ public class HM_Manager : MonoBehaviour
     public EventHandler ev_handler;
 
     public List<GameEvent> game_events;
+
+    private Dictionary<int, List<GameObject>> cubes_dictionary= new Dictionary<int, List<GameObject>>();
 
     //List of game objects
     private List<GameObject> heatMapObjects = new List<GameObject>();
@@ -59,6 +76,8 @@ public class HM_Manager : MonoBehaviour
         populateGrid();
         //Print the HeatMap
         displayMap();
+
+        loadAllEvents();
     }
 
     // Update is called once per frame
@@ -78,8 +97,10 @@ public class HM_Manager : MonoBehaviour
 
     }
 
+    //Passes all the positions of the events to the positions list
     private void loadEvents(List<GameEvent> events)
     {
+        positions.Clear();
         foreach(GameEvent ge in events)
         {
             positions.Add(ge.position);
@@ -163,4 +184,60 @@ public class HM_Manager : MonoBehaviour
         hideMap();
     }
 
+    //This function loads ALL lists cubes into a Dictionary 
+    private void loadAllEvents()
+    {
+        for (int i = 0; i < (int)CubeLists.MAX_EVENTS; ++i)
+        {
+            //First load the events info
+            switch (i)
+                {
+                case (int)CubeLists.WALK_EVENT:
+                    loadEvents(ev_handler.walkEventContainer.eventList);
+                    break;
+                case (int)CubeLists.AIR_EVENT:
+                    loadEvents(ev_handler.airEventContainer.eventList);
+                    break;
+                case (int)CubeLists.KEY_EVENT:
+                    loadEvents(ev_handler.keyEventContainer.eventList);
+                    break;
+                case (int)CubeLists.JUMP_EVENT:
+                    loadEvents(ev_handler.jumpEventContainer.eventList);
+                    break;
+                case (int)CubeLists.ATTACK_EVENT:
+                    loadEvents(ev_handler.attackEventContainer.eventList);
+                    break;
+                case (int)CubeLists.HIT_EVENT:
+                    //loadEvents(ev_handler.hitEventContainer.eventList);
+                    break;
+                case (int)CubeLists.DEATH_EVENT:
+                    loadEvents(ev_handler.deathEventContainer.eventList);
+                    break;
+                case (int)CubeLists.SPAWN_EVENT:
+                    loadEvents(ev_handler.spawnEventContainer.eventList);
+                    break;
+                case (int)CubeLists.INV_START_EVENT:
+                    loadEvents(ev_handler.invStartEventContainer.eventList);
+                    break;
+                case (int)CubeLists.INV_END_EVENT:
+                    loadEvents(ev_handler.invEndEventContainer.eventList);
+                    break;
+            }
+
+            //Now populate the grid & the map 
+            populateGrid();
+            displayMap();
+
+            List<GameObject> gos = new List<GameObject>();
+            //Copy all elements from HeatMap gos to our own list of gos in the dictionary
+            foreach (GameObject go in heatMapObjects)
+            {
+                gos.Add(go);//Copy each gameobject
+            }
+            heatMapObjects.Clear(); //Clear placeholder
+            cubes_dictionary.Add(i, gos);   //Add the list to our dictionary
+        }
+        int test = cubes_dictionary.Count;
+
+    }
 }
