@@ -52,9 +52,14 @@ namespace Events
 
         public List<ContainerEventType> DeserializeList(string json_file)
         {
-            eventWrapper = JsonUtility.FromJson<EventWrapper<ContainerEventType>>(json_file);
-            eventList = eventWrapper.events.ToList();
-            return eventList;
+            if (json_file != "")
+            {
+                eventWrapper = JsonUtility.FromJson<EventWrapper<ContainerEventType>>(json_file);
+                eventList = eventWrapper.events.ToList();
+                return eventList;
+            }
+            else
+                return null;
         }
 
         public int Count
