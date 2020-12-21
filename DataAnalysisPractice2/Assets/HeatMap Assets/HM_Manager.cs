@@ -73,10 +73,11 @@ public class HM_Manager : MonoBehaviour
         if(ev_handler != null && ev_handler.walkEventContainer != null && ev_handler.walkEventContainer.eventList != null)
         loadEvents(ev_handler.attackEventContainer.eventList);    //Testing with walk events list
 
-        populateGrid();
-        //Print the HeatMap
-        displayMap();
+        //populateGrid();
+        ////Print the HeatMap
+        //displayMap();
 
+        //Load all events so they can be displayed
         loadAllEvents();
     }
 
@@ -167,21 +168,35 @@ public class HM_Manager : MonoBehaviour
         }
     }
 
-    public void drawMap()
+    //Sets all cubes from a dictionary list as active
+    public void drawMap(CubeLists cube_list)
     {
-        for (int i = 0; i < heatMapObjects.Count; i++)
-            heatMapObjects[i].SetActive(true);
+        if (cubes_dictionary.ContainsKey((int)cube_list))
+        {
+            List<GameObject> gos = cubes_dictionary[(int)cube_list];
+
+            for (int i = 0; i < gos.Count; i++)
+                gos[i].SetActive(true);
+        }
     }
 
-    public void hideMap()
+    public void hideMap(CubeLists cube_list)
     {
-        for (int i = 0; i < heatMapObjects.Count; i++)
-            heatMapObjects[i].SetActive(false);
+        if (cubes_dictionary.ContainsKey((int)cube_list))
+        {
+            List<GameObject> gos = cubes_dictionary[(int)cube_list];
+
+            for (int i = 0; i < gos.Count; i++)
+                gos[i].SetActive(false);
+        }
     }
 
     public void hideAllMaps()
     {
-        hideMap();
+        for (int i = 0; i < (int)CubeLists.MAX_EVENTS; ++i)
+        {
+            hideMap((CubeLists)i);
+        }
     }
 
     //This function loads ALL lists cubes into a Dictionary 
