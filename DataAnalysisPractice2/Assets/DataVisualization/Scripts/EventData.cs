@@ -52,9 +52,14 @@ namespace Events
 
         public List<ContainerEventType> DeserializeList(string json_file)
         {
-            eventWrapper = JsonUtility.FromJson<EventWrapper<ContainerEventType>>(json_file);
-            eventList = eventWrapper.events.ToList();
-            return eventList;
+            if (json_file != "")
+            {
+                eventWrapper = JsonUtility.FromJson<EventWrapper<ContainerEventType>>(json_file);
+                eventList = eventWrapper.events.ToList();
+                return eventList;
+            }
+            else
+                return null;
         }
 
         public int Count
@@ -92,9 +97,11 @@ namespace Events
     [System.Serializable]
     public class RegisterEvent : GenericEvent  // First Time Login Event
     {
-        public RegisterEvent(int player_id, int age, string country, string test_group) : base(event_types.EVENT_REGISTER)
+        public RegisterEvent(int player_id, string first_name, string second_name, int age, string country, string test_group) : base(event_types.EVENT_REGISTER)
         {
             this.player_id = player_id;
+            this.first_name = first_name;
+            this.second_name = second_name;
             this.age = age;
             this.country = country;
             this.test_group = test_group;
@@ -105,9 +112,11 @@ namespace Events
             return JsonUtility.ToJson(this, pretty);
         }
 
-        int player_id;
-        int age;
-        string country;
+        public int player_id;
+        public string first_name;
+        public string second_name;
+        public int age;
+        public string country;
         string test_group;
     }
 
@@ -127,10 +136,10 @@ namespace Events
             return JsonUtility.ToJson(this, pretty);
         }
 
-        int player_id;
-        int session_id;
-        string start;
-        string end;
+        public int player_id;
+        public int session_id;
+        public string start;
+        public string end;
     }
 
     // GAME EVENTS
