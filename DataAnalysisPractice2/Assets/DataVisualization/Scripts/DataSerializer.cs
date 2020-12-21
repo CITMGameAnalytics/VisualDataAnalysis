@@ -61,13 +61,15 @@ namespace DataVisualizer
         {
             string destination = Application.dataPath + "/" + filename;
 
-            if (File.Exists(destination))
-                System.IO.File.AppendAllText(destination, s);
-            else
-            {
+            // Note we are currently overwriting the file if it exists, this is intentional
+
+            //if (File.Exists(destination))
+            //    System.IO.File.AppendAllText(destination, s);
+            //else
+            //{
                 //File.Create(destination);
                 System.IO.File.WriteAllText(destination, s);
-            }
+            //}
         }
 
         public void _Read(ref string s, string filename)
