@@ -47,6 +47,11 @@ namespace DataVisualizer
 
         }
 
+        public static void Overwrite(string s, string filename)
+        {
+            dataSerializer._Overwrite(ref s, filename);
+        }
+
         public static void Print(string s, string filename)
         {
             dataSerializer._Print(ref s, filename);
@@ -57,19 +62,23 @@ namespace DataVisualizer
             dataSerializer._Read(ref s, filename);
         }
 
+        public void _Overwrite(ref string s, string filename)
+        {
+            string destination = Application.dataPath + "/" + filename;
+            System.IO.File.WriteAllText(destination, s);
+        }
+
         public void _Print(ref string s, string filename)
         {
             string destination = Application.dataPath + "/" + filename;
 
-            // Note we are currently overwriting the file if it exists, this is intentional
-
-            //if (File.Exists(destination))
-            //    System.IO.File.AppendAllText(destination, s);
-            //else
-            //{
-                //File.Create(destination);
+            if (File.Exists(destination))
+                System.IO.File.AppendAllText(destination, s);
+            else
+            {
+                File.Create(destination);
                 System.IO.File.WriteAllText(destination, s);
-            //}
+            }
         }
 
         public void _Read(ref string s, string filename)

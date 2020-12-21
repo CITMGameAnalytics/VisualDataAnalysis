@@ -108,55 +108,55 @@ public class EventHandler : MonoBehaviour
         }
     }
 
-    void OnDestroy()    //TODO: Change all Prints to Overwrites (rewrite entire fall, not append to it)
+    void OnDestroy()    //Since on startup we loaded all events parsed in the json file, we overwrite the entire thing to parse the old and new events in a single C# object class.
     {
         // Players
         if (registerEventContainer.Count > 0)
-            DataSerializer.Print(registerEventContainer.SerializeList(), directory + "Players.csv");
+            DataSerializer.Overwrite(registerEventContainer.SerializeList(), directory + "Players.csv");
 
         // Sessions
         if (sessionEventContainer.Count > 0)
-            DataSerializer.Print(sessionEventContainer.SerializeList(), directory + "Sessions.csv");
+            DataSerializer.Overwrite(sessionEventContainer.SerializeList(), directory + "Sessions.csv");
 
         // Walks
         if (walkEventContainer.Count > 0)
-            DataSerializer.Print(walkEventContainer.SerializeList(false), directory + "GroundPositions.csv");
+            DataSerializer.Overwrite(walkEventContainer.SerializeList(false), directory + "GroundPositions.csv");
 
         // Airs
         if (airEventContainer.Count > 0)
-            DataSerializer.Print(airEventContainer.SerializeList(false), directory + "AirbornePositions.csv");
+            DataSerializer.Overwrite(airEventContainer.SerializeList(false), directory + "AirbornePositions.csv");
 
         // Keys
         if (keyEventContainer.Count > 0)
-            DataSerializer.Print(keyEventContainer.SerializeList(false), directory + "KeyPositions.csv");
+            DataSerializer.Overwrite(keyEventContainer.SerializeList(false), directory + "KeyPositions.csv");
 
         // Jumps
         if (jumpEventContainer.Count > 0)
-            DataSerializer.Print(jumpEventContainer.SerializeList(), directory + "Jumps.csv");
+            DataSerializer.Overwrite(jumpEventContainer.SerializeList(), directory + "Jumps.csv");
 
         // Attacks
         if (attackEventContainer.Count > 0)
-            DataSerializer.Print(attackEventContainer.SerializeList(), directory + "Attacks.csv");
+            DataSerializer.Overwrite(attackEventContainer.SerializeList(), directory + "Attacks.csv");
 
         // Hits
         if (hitEventContainer.Count > 0)
-            DataSerializer.Print(hitEventContainer.SerializeList(), directory + "Hits.csv");
+            DataSerializer.Overwrite(hitEventContainer.SerializeList(), directory + "Hits.csv");
 
         // Deaths
         if (deathEventContainer.Count > 0)
-            DataSerializer.Print(deathEventContainer.SerializeList(), directory + "Deaths.csv");
+            DataSerializer.Overwrite(deathEventContainer.SerializeList(), directory + "Deaths.csv");
 
         // Spawns
         if (spawnEventContainer.Count > 0)
-            DataSerializer.Print(spawnEventContainer.SerializeList(), directory + "Spawns.csv");
+            DataSerializer.Overwrite(spawnEventContainer.SerializeList(), directory + "Spawns.csv");
 
         // Invinicibility Starts
         if (invStartEventContainer.Count > 0)
-            DataSerializer.Print(invStartEventContainer.SerializeList(), directory + "InvulnerabilityStarts.csv");
+            DataSerializer.Overwrite(invStartEventContainer.SerializeList(), directory + "InvulnerabilityStarts.csv");
 
         // Invincibility Ends
         if (invEndEventContainer.Count > 0)
-            DataSerializer.Print(invEndEventContainer.SerializeList(), directory + "InvulnerabilityEnds.csv");
+            DataSerializer.Overwrite(invEndEventContainer.SerializeList(), directory + "InvulnerabilityEnds.csv");
     }
 
     // -------------------------------------- CSV LEGACY CODE --------------------------------------
@@ -214,7 +214,7 @@ public class EventHandler : MonoBehaviour
         registerEventContainer.Add(registerEvent);
 
         //string event_data = registerEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Players.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Players.csv");
     }
 
     public void NewSessionEvent(int player_id, int session_id, System.DateTime start, System.DateTime end) // User Login
@@ -223,7 +223,7 @@ public class EventHandler : MonoBehaviour
         sessionEventContainer.Add(sessionEvent);
 
         //string event_data = sessionEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Sessions.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Sessions.csv");
     }
 
     // Game Recurrent Events
@@ -233,7 +233,7 @@ public class EventHandler : MonoBehaviour
         walkEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "GroundPositions.csv");
+        //DataSerializer.Overwrite(event_data, directory + "GroundPositions.csv");
     }
 
     public void NewAirbornePositionEvent(Damageable character) // Being airborne (periodical)
@@ -242,7 +242,7 @@ public class EventHandler : MonoBehaviour
         airEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "AirbornePositions.csv");
+        //DataSerializer.Overwrite(event_data, directory + "AirbornePositions.csv");
     }
 
     public void NewKeyPositionEvent(Damageable character) // Position while holding key (periodical)
@@ -251,7 +251,7 @@ public class EventHandler : MonoBehaviour
         keyEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "KeyPositions.csv");
+        //DataSerializer.Overwrite(event_data, directory + "KeyPositions.csv");
     }
 
     // Game Trigger Events
@@ -261,7 +261,7 @@ public class EventHandler : MonoBehaviour
         jumpEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Jumps.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Jumps.csv");
     }
 
     public void NewAttackEvent(Damageable character) // Position where attacked
@@ -270,7 +270,7 @@ public class EventHandler : MonoBehaviour
         attackEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Attacks.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Attacks.csv");
     }
 
     public void NewHitEvent(Damageable character) // Position where damaged
@@ -279,7 +279,7 @@ public class EventHandler : MonoBehaviour
         hitEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Hits.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Hits.csv");
     }
 
     public void NewDeathEvent(Damageable character) // Position where dead
@@ -288,7 +288,7 @@ public class EventHandler : MonoBehaviour
         deathEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Deaths.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Deaths.csv");
     }
 
     public void NewSpawnEvent(Damageable character) // Position where spawned or respawned
@@ -297,7 +297,7 @@ public class EventHandler : MonoBehaviour
         spawnEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "Spawns.csv");
+        //DataSerializer.Overwrite(event_data, directory + "Spawns.csv");
     }
 
     public void NewInvulnerabilityStartEvent(Damageable character) // Position where started invulnerability
@@ -306,7 +306,7 @@ public class EventHandler : MonoBehaviour
         invStartEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "InvulnerabilityStarts.csv");
+        //DataSerializer.Overwrite(event_data, directory + "InvulnerabilityStarts.csv");
     }
 
     public void NewInvulnerabilityEndEvent(Damageable character) // Position where ended invulnerability
@@ -315,6 +315,6 @@ public class EventHandler : MonoBehaviour
         invEndEventContainer.Add(gameEvent);
 
         //string event_data = gameEvent.Serialize(true);
-        //DataSerializer.Print(event_data, directory + "InvulnerabilityEnds.csv");
+        //DataSerializer.Overwrite(event_data, directory + "InvulnerabilityEnds.csv");
     }
 }
