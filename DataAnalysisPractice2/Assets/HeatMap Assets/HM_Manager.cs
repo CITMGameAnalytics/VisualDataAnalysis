@@ -121,14 +121,14 @@ public class HM_Manager : MonoBehaviour
                     
                     // Check the position of the ground with a raycast
                 // This would cast rays only against colliders in layer 22.
-                int layerMask = 1 << 22;
-                layerMask = ~layerMask;
+                int layerMask = 1 << 16;
+                //layerMask = ~layerMask;
                 float y_position = 0.0f;
 
                 RaycastHit hit;
                 Vector3 point_pos = go.transform.position;
                 // Does the ray intersect any objects in layer 22
-                if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.down), out hit))
+                if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.down), out hit, 100.0f,layerMask))
                 {
                     y_position = go.transform.position.y - hit.distance;
                 }
