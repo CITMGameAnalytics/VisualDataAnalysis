@@ -97,12 +97,13 @@ namespace Events
     [System.Serializable]
     public class RegisterEvent : GenericEvent  // First Time Login Event
     {
-        public RegisterEvent(int player_id, string first_name, string second_name, int age, string country, string test_group) : base(event_types.EVENT_REGISTER)
+        public RegisterEvent(int player_id, string first_name, string second_name, int age, string gender, string country, string test_group) : base(event_types.EVENT_REGISTER)
         {
             this.player_id = player_id;
             this.first_name = first_name;
             this.second_name = second_name;
             this.age = age;
+            this.gender = gender;
             this.country = country;
             this.test_group = test_group;
         }
@@ -116,8 +117,9 @@ namespace Events
         public string first_name;
         public string second_name;
         public int age;
+        public string gender;
         public string country;
-        string test_group;
+        public string test_group;
     }
 
     [System.Serializable]
