@@ -79,6 +79,16 @@
             "gender": "M",
             "country": "India",
             "test_group": "A"
+        },
+        {
+            "event_id": 1,
+            "player_id": 9,
+            "first_name": "Esteban",
+            "second_name": "Dacenzo",
+            "age": 17,
+            "gender": "M",
+            "country": "Norway",
+            "test_group": "B"
         }
     ]
 }
