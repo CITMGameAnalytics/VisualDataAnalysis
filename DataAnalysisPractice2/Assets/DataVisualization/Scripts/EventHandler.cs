@@ -13,22 +13,22 @@ public class EventHandler : MonoBehaviour
 
     string directory = "/DataVisualization/DataFiles/";
 
-    // Event Lists
-    public EventContainer<RegisterEvent> registerEventContainer = new EventContainer<RegisterEvent>();  // Public because PlayerSessionSimulator accesses to it to ensure players are not repeated
-    EventContainer<SessionEvent> sessionEventContainer = new EventContainer<SessionEvent>();
+    // Event Lists (Public so that it can be used for the heatmap and the PlayerSessionSimulator
+    public EventContainer<RegisterEvent> registerEventContainer = new EventContainer<RegisterEvent>();
+    public EventContainer<SessionEvent> sessionEventContainer = new EventContainer<SessionEvent>();
 
-    EventContainer<GameEvent> walkEventContainer = new EventContainer<GameEvent>();
-    EventContainer<GameEvent> airEventContainer = new EventContainer<GameEvent>();
-    EventContainer<GameEvent> keyEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> walkEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> airEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> keyEventContainer = new EventContainer<GameEvent>();
 
-    EventContainer<GameEvent> jumpEventContainer = new EventContainer<GameEvent>();
-    EventContainer<GameEvent> attackEventContainer = new EventContainer<GameEvent>();
-    EventContainer<HitEvent> hitEventContainer = new EventContainer<HitEvent>();
-    EventContainer<GameEvent> deathEventContainer = new EventContainer<GameEvent>();
-    EventContainer<GameEvent> spawnEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> jumpEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> attackEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<HitEvent> hitEventContainer = new EventContainer<HitEvent>();
+    public EventContainer<GameEvent> deathEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> spawnEventContainer = new EventContainer<GameEvent>();
 
-    EventContainer<GameEvent> invStartEventContainer = new EventContainer<GameEvent>();
-    EventContainer<GameEvent> invEndEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> invStartEventContainer = new EventContainer<GameEvent>();
+    public EventContainer<GameEvent> invEndEventContainer = new EventContainer<GameEvent>();
     
     void Awake()    //Read all available file data and load it into C# EventContainers to then add the new session events and overwrite the json files in order to maintain a single parsed Class OBJ in the .csv.
     {
