@@ -1,0 +1,34 @@
+{
+    "events": [
+        {
+            "event_id": 1,
+            "player_id": 7,
+            "first_name": "Lakenya",
+            "second_name": "Bushmaker",
+            "age": 57,
+            "gender": "F",
+            "country": "China",
+            "test_group": "B"
+        },
+        {
+            "event_id": 1,
+            "player_id": 1,
+            "first_name": "Agustin",
+            "second_name": "Sarin",
+            "age": 21,
+            "gender": "M",
+            "country": "United Kingdom",
+            "test_group": "A"
+        },
+        {
+            "event_id": 1,
+            "player_id": 5,
+            "first_name": "Clarine",
+            "second_name": "Faubers",
+            "age": 42,
+            "gender": "F",
+            "country": "United States",
+            "test_group": "B"
+        }
+    ]
+}
