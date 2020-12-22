@@ -15,6 +15,9 @@ namespace Gamekit3D
 
         // Events
         public UnityEvent OnRespawn, OnWalking, OnJump, OnAttack, OnAirborne;
+        private float nextWalkEvent = 0.0f;
+        private float nextAirborneEvent = 0.0f;
+        public float period = 2.0f;
 
         public bool respawning { get { return m_Respawning; } }
 
@@ -317,7 +320,12 @@ namespace Gamekit3D
                 // If Ellen is airborne, apply gravity.
                 m_VerticalSpeed -= gravity * Time.deltaTime;
 
-                OnAirborne.Invoke();
+                if (Time.time > nextAirborneEvent)
+                {
+                    nextAirborneEvent = Time.time + period;
+                    OnAirborne.Invoke();
+
+                }
             }
         }
 
@@ -526,7 +534,12 @@ namespace Gamekit3D
                     m_CurrentWalkingSurface = null;
                 }
 
-                OnWalking.Invoke();
+                if(Time.time > nextWalkEvent)
+                {
+                    nextWalkEvent = Time.time + period;
+                    OnWalking.Invoke();
+
+                }
 
             }
             else
