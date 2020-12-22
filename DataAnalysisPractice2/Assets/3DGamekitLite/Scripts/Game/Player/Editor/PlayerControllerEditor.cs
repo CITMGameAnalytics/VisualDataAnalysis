@@ -30,6 +30,7 @@ namespace Gamekit3D
         SerializedProperty m_EmoteJumpPlayerProp;
 
         SerializedProperty OnRespawn, OnWalking, OnJump, OnAttack, OnAirborne;
+        SerializedProperty period;
 
         GUIContent m_ScriptContent = new GUIContent("Script");
 
@@ -50,6 +51,8 @@ namespace Gamekit3D
         GUIContent m_EmoteAttackPlayerContent = new GUIContent("Emote Attack Player", "Used to play a random vocal sound when Ellen attacks.");
         GUIContent m_EmoteJumpPlayerContent = new GUIContent("Emote Jump Player", "Used to play a random vocal sound when Ellen jumps.");
 
+        GUIContent periodContent = new GUIContent("Period", "Seconds to wait to log another recurrent event");
+
         void OnEnable()
         {
             m_ScriptProp = serializedObject.FindProperty("m_Script");
@@ -61,6 +64,7 @@ namespace Gamekit3D
             m_MaxTurnSpeedProp = serializedObject.FindProperty("maxTurnSpeed");
             m_IdleTimeoutProp = serializedObject.FindProperty("idleTimeout");
             m_CanAttackProp = serializedObject.FindProperty("canAttack");
+            period = serializedObject.FindProperty("period");
 
             m_MeleeWeaponProp = serializedObject.FindProperty("meleeWeapon");
             m_CameraSettingsProp = serializedObject.FindProperty("cameraSettings");
@@ -96,7 +100,7 @@ namespace Gamekit3D
 
             EditorGUILayout.PropertyField(m_IdleTimeoutProp, m_IdleTimeoutContent);
             EditorGUILayout.PropertyField(m_CanAttackProp, m_CanAttackContent);
-
+            EditorGUILayout.PropertyField(period, periodContent);
 
             EditorGUILayout.Space();
 
