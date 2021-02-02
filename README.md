@@ -1,6 +1,6 @@
 # VisualDataAnalysis
 Creation of heatmaps given game extracted data.
-[See our presentation here](https://docs.google.com/presentation/d/1ibHJlpwbCHZsr5NsZonO1FL51qKs_scMxIewKtmuy9U/edit?usp=sharing).
+[See our presentation here](https://docs.google.com/presentation/d/e/2PACX-1vS5RG3SSG0lIlQnxZ8QD0O07I3TOPQnyNg-pMk5_GLCblrkfOAxX7eTYNZksmagA8moCTNTBTcUKRi0/pub?start=false&loop=false&delayms=15000).
 
 ## Authors:
 * GitHub account: [AitorSimona](https://github.com/AitorSimona)
